@@ -2,7 +2,10 @@ import {useState} from 'react';
 import Header from './Components/Header';
 import Tasks from './Components/Tasks';
 
+//React App being exported
 const App = () => {
+
+  //"data" to use in demo. tasklist is an instance of the array, settasks is method to update the array, useState is initilization.
   const [tasklist, setTasks] = useState([
     {
         id: 1,
@@ -24,14 +27,21 @@ const App = () => {
     }
 ]);
 
+//to delete a task
 const deleteTask = (id) => {
-  setTasks(tasklist.filter((task) => task.id !== id))
+  setTasks(tasklist.filter((task) => task.id !== id));
+};
+
+//to toggle a reminder
+const toggleReminder = (id) => {
+  setTasks(tasklist.map((task) => task.id === id ? { ...task, reminder: !task.reminder} : task));
+  // setTasks(tasklist.find((id) => this.id == id) );
 };
 
   return (
     <div className="container">
       <Header />
-      {tasklist.length > 0 ? <Tasks tasklist={tasklist} onDelete={deleteTask}/> : <h4>No Tasks</h4>}
+      {tasklist.length > 0 ? <Tasks tasklist={tasklist} onDelete={deleteTask} onToggle={toggleReminder}/> : <h4>No Tasks</h4>}
     </div>
   );
 }
